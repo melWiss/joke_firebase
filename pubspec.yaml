@@ -14,7 +14,7 @@ dependencies:
   google_sign_in:
   firebase_auth:
   cloud_firestore:
-
+  social_signin_buttons: ^0.0.2
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
