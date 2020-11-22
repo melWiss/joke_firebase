@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../tables/joke.dart';
 import '../tables/profile.dart';
 import '../tables/reaction.dart';
+import '../widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,125 +19,23 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: PageView(
           controller: pageController,
+          onPageChanged: (value) {
+            setState(() {
+              index = value;
+            });
+          },
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Latest Jokes',
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                ),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: jokes.length,
-                  itemBuilder: (context, index) {
-                    Profile profile = users.firstWhere(
-                      (element) {
-                        if (element.userId == jokes[index].userId) return true;
-                        return false;
-                      },
-                    );
-                    var likeReactions = reactions.where(
-                      (element) {
-                        if (jokes[index].id == element.jokeId &&
-                            element.reaction == ReactionType.Like) return true;
-                        return false;
-                      },
-                    );
-                    var dislikeReactions = reactions.where(
-                      (element) {
-                        if (jokes[index].id == element.jokeId &&
-                            element.reaction == ReactionType.Dislike)
-                          return true;
-                        return false;
-                      },
-                    );
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(4),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: Image.network(
-                                      profile.profilePicUrl,
-                                      height: 50,
-                                      width: 50,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Text(profile.fullName),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Text(
-                                  jokes[index].text,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(4),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Icon(
-                                        Icons.thumb_up,
-                                        size: 35,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        likeReactions.length.toString(),
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Icon(
-                                        Icons.thumb_down,
-                                        size: 35,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        dislikeReactions.length.toString(),
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                )),
-              ],
+            JokesList(
+              jokes: jokesExample,
+              reactions: reactionsExample,
+              users: usersEaxmple,
+              title: 'Latest Jokes',
             ),
-            Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                color: Colors.green,
-              ),
+            JokesList(
+              jokes: jokesExample,
+              reactions: reactionsExample,
+              users: usersEaxmple,
+              title: 'Liked Jokes',
             ),
             Center(
               child: Container(

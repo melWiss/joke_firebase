@@ -59,11 +59,11 @@ class Reaction {
 
 String reactionId = 'reactionId#';
 
-List<Reaction> reactions = List<Reaction>.generate(
+List<Reaction> reactionsExample = List<Reaction>.generate(
   24,
   (index) => Reaction(
       id: '$reactionId$index',
       reaction: ReactionType.values[index % 2],
       userId: userId,
-      jokeId: jokes[0].id),
+      jokeId: jokesExample[0].id),
 );

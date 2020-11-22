@@ -24,7 +24,7 @@ class Joke {
       };
 }
 
-List<Joke> jokes = List<Joke>.generate(
+List<Joke> jokesExample = List<Joke>.generate(
   12,
   (index) => Joke(
     id: jokeId,
