@@ -118,9 +118,14 @@ class JokeCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Icon(
-                        Icons.thumb_up,
-                        size: 35,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.thumb_up,
+                          size: 35,
+                        ),
+                        onPressed: () {
+                          //TODO: Add like action
+                        },
                       ),
                     ),
                     Expanded(
@@ -132,10 +137,15 @@ class JokeCard extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Icon(
-                        Icons.thumb_down,
-                        size: 35,
-                        color: Colors.red[300],
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.thumb_down,
+                          size: 35,
+                          color: Colors.red[300],
+                        ),
+                        onPressed: () {
+                          //TODO: add dislike action
+                        },
                       ),
                     ),
                     Expanded(
