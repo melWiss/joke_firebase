@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:joke_firebase/screens/error.dart';
+import 'package:joke_firebase/screens/home.dart';
+import 'package:joke_firebase/screens/joke.dart';
+import 'package:joke_firebase/tables/joke.dart';
 import './screens/auth.dart';
 import 'style.dart';
 
@@ -54,7 +58,61 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: Styles.textThemeLight,
       ),
-      home: AuthScreen(),
+      // home: AuthScreen(),
+      initialRoute: '/auth',
+      onGenerateInitialRoutes: (initialRoute) {
+        return [
+          MaterialPageRoute(
+            builder: (context) => AuthScreen(),
+            settings: RouteSettings(name: initialRoute),
+          )
+        ];
+      },
+      onGenerateRoute: (settings) {
+        Uri path = Uri.parse(settings.name);
+        try {
+          switch (path.pathSegments[0]) {
+            case 'auth':
+              return MaterialPageRoute(
+                builder: (context) => AuthScreen(),
+                settings: RouteSettings(name: settings.name),
+              );
+              break;
+            case 'home':
+              if (path.queryParameters.keys.length == 0)
+                return MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                  settings: RouteSettings(name: settings.name),
+                );
+              else {
+                Joke joke = jokesExample
+                    .where((element) =>
+                        element.id == path.queryParameters['jokeid'])
+                    .first;
+                return MaterialPageRoute(
+                  builder: (context) => JokeScreen(
+                    joke: joke,
+                  ),
+                  settings: RouteSettings(name: settings.name),
+                );
+              }
+              break;
+            default:
+              return MaterialPageRoute(
+                builder: (context) => ErrorScreen(),
+                settings: RouteSettings(name: settings.name),
+              );
+          }
+        } catch (e) {
+          print(e.toString());
+          return MaterialPageRoute(
+            builder: (context) => ErrorScreen(
+              error: e.toString(),
+            ),
+            settings: RouteSettings(name: settings.name),
+          );
+        }
+      },
     );
   }
 }

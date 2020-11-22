@@ -30,10 +30,12 @@ class _AuthScreenState extends State<AuthScreen> {
                 onPressed: () {
                   //TODO: Change this when you finish the ui elements 1
                   print("signed in");
-                  Navigator.of(context).push(MaterialPageRoute(
-                    settings: RouteSettings(name: '/home'),
-                    builder: (context) => HomeScreen(),
-                  ));
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/home', (route) => false);
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   settings: RouteSettings(name: '/home'),
+                  //   builder: (context) => HomeScreen(),
+                  // ));
                 },
               ),
             )

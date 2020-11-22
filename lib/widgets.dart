@@ -62,10 +62,12 @@ class JokesList extends StatelessWidget {
 
 class JokeCard extends StatelessWidget {
   const JokeCard({
-    this.joke,
+    @required this.joke,
+    this.extended = false,
   });
 
   final Joke joke;
+  final bool extended;
 
   @override
   Widget build(BuildContext context) {
@@ -79,69 +81,76 @@ class JokeCard extends StatelessWidget {
         .toList();
     Profile profile =
         usersExample.where((element) => element.userId == joke.userId).first;
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(4),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ProfilePic(
-                  user: profile,
-                  size: 50,
-                  padding: 0,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(profile.fullName),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                this.joke.text,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Row(
+    return InkWell(
+      onTap: extended
+          ? () {}
+          : () {
+              Navigator.of(context).pushNamed('/home?jokeid=${joke.id}');
+            },
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(4),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Expanded(
-                    child: Icon(
-                      Icons.thumb_up,
-                      size: 35,
-                    ),
+                  ProfilePic(
+                    user: profile,
+                    size: 50,
+                    padding: 0,
                   ),
-                  Expanded(
-                    child: Text(
-                      likeReactions.length.toString(),
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Icon(
-                      Icons.thumb_down,
-                      size: 35,
-                      color: Colors.red[300],
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      dislikeReactions.length.toString(),
-                      style: TextStyle(
-                        color: Colors.red[300],
-                      ),
-                    ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(profile.fullName),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  this.joke.text,
+                  maxLines: !extended ? 3 : 999,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Icon(
+                        Icons.thumb_up,
+                        size: 35,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        likeReactions.length.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Icon(
+                        Icons.thumb_down,
+                        size: 35,
+                        color: Colors.red[300],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        dislikeReactions.length.toString(),
+                        style: TextStyle(
+                          color: Colors.red[300],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
