@@ -50,6 +50,37 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icon(Icons.add),
         onPressed: () {
           print("joke added");
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Write a joke"),
+              content: TextField(),
+              actions: [
+                FlatButton(
+                  child: Text(
+                    "Send",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          );
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
