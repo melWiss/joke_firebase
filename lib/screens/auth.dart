@@ -18,8 +18,9 @@ class _AuthScreenState extends State<AuthScreen> {
           children: [
             Padding(
               padding: EdgeInsets.all(8),
-              child: FlutterLogo(
-                size: 175,
+              child: Text(
+                "😂",
+                style: TextStyle(fontSize: 220),
               ),
             ),
             Padding(

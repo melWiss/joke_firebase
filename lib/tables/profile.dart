@@ -23,7 +23,7 @@ class Profile {
 }
 
 String userId = 'w6s8d4c65sd';
-List<Profile> usersEaxmple = List<Profile>.generate(
+List<Profile> usersExample = List<Profile>.generate(
   1,
   (index) => Profile(
       userId: userId,

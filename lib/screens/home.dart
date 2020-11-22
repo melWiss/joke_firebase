@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:joke_firebase/screens/profile.dart';
 import '../tables/joke.dart';
 import '../tables/profile.dart';
 import '../tables/reaction.dart';
@@ -27,23 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             JokesList(
               jokes: jokesExample,
-              reactions: reactionsExample,
-              users: usersEaxmple,
               title: 'Latest Jokes',
             ),
             JokesList(
               jokes: jokesExample,
-              reactions: reactionsExample,
-              users: usersEaxmple,
               title: 'Liked Jokes',
             ),
-            Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                color: Colors.blue,
-              ),
-            ),
+            ProfileScreen(
+              jokes: jokesExample
+                  .where((element) => element.userId == userId)
+                  .toList(),
+              user: usersExample
+                  .where((element) => element.userId == userId)
+                  .first,
+            )
           ],
         ),
       ),

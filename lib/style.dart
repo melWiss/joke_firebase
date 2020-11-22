@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  static Color primaryColor = Color(0xFF0055ff);
+  static Color primaryColor = Color(0xFFFFFF55);
 
   static Color secondaryDarkDarkColor = Color(0xFF262626);
   static Color secondaryDarkColor = Color(0xFF263030);
@@ -9,10 +9,6 @@ class Styles {
 
   static Color secondaryLightColor = Colors.white;
   static Color fontColorLight = Color(0xFF262626);
-  static Color phoneCategoryColor = Color(0xFF9483BD);
-  static Color laptopCategoryColor = Color(0xFFE89A96);
-  static Color sunglassesCategoryColor = Color(0xFFE8CE4E);
-  static Color tabletCategoryColor = Color(0xFF9ACBED);
 
   static MaterialColor darkSwatch = MaterialColor(0xFF262626, {
     50: secondaryDarkDarkColor,
