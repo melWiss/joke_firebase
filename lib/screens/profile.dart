@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * .3,
+                    height: MediaQuery.of(context).size.height * .2,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
