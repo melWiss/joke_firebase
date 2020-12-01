@@ -200,3 +200,78 @@ class ProfilePic extends StatelessWidget {
     );
   }
 }
+
+class FutureWidget<T> extends StatefulWidget {
+  final Future<T> future;
+  final Widget Function(T) child;
+  FutureWidget({
+    @required this.future,
+    @required this.child,
+  });
+  @override
+  _FutureWidgetState<T> createState() => _FutureWidgetState<T>();
+}
+
+class _FutureWidgetState<T> extends State<FutureWidget<T>> {
+  Future<T> future;
+  Widget Function(T) child;
+  @override
+  Widget build(BuildContext context) {
+    future = widget.future;
+    child = widget.child;
+    return FutureBuilder(
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return child(snapshot.data);
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            body: Text(snapshot.error),
+          );
+        }
+        return LoadingScreen(
+          transparent: true,
+        );
+      },
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  final Future future;
+  final bool transparent;
+  final Function onFinish;
+  LoadingScreen({
+    this.future,
+    this.transparent = false,
+    this.onFinish,
+  });
+  @override
+  Widget build(BuildContext context) {
+    if (future != null)
+      future.then((value) {
+        if (onFinish != null) {
+          onFinish();
+        }
+      }).catchError((onError) {
+        Navigator.of(context).pop();
+      });
+    return WillPopScope(
+      onWillPop: () async {
+        if (future == null) return true;
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: transparent ? Colors.transparent : Colors.black45,
+        body: Center(
+          child: Theme(
+            data: ThemeData(
+              accentColor: Theme.of(context).primaryColor,
+            ),
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      ),
+    );
+  }
+}
